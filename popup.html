@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+  <script src="theme.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <img src="icons/icon.svg" alt="" width="22" height="22">
+      <div>
+        <div class="title">Header Injector</div>
+        <div class="status" id="status"></div>
+      </div>
+    </div>
+    <label class="switch big" title="Включить / выключить всё">
+      <input type="checkbox" id="enabled">
+      <span></span>
+    </label>
+  </header>
+
+  <main>
+    <div class="list" id="rules"></div>
+    <div class="empty" id="empty" hidden>
+      <div class="empty-title">Пока нет правил</div>
+      <div class="empty-text">Добавь header — например <code>x-test-header</code> со своим значением.</div>
+    </div>
+    <button class="add" id="add">+ Добавить header</button>
+  </main>
+
+  <footer class="foot">
+    <span class="site">Сайт: <code id="current">—</code></span>
+    <button class="icon-btn theme-toggle" id="theme" title="Светлая / тёмная тема">
+      <svg class="sun" viewBox="0 0 24 24" width="15" height="15"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" width="15" height="15"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+    </button>
+  </footer>
+
+  <template id="rule-tpl">
+    <section class="rule">
+      <div class="row">
+        <label class="switch" title="Включить правило">
+          <input type="checkbox" class="r-enabled">
+          <span></span>
+        </label>
+        <input class="r-name" type="text" size="1" placeholder="header" spellcheck="false">
+        <input class="r-value" type="text" size="1" placeholder="значение" spellcheck="false">
+        <button class="icon-btn r-scope" title="Где применять">
+          <svg viewBox="0 0 24 24" width="15" height="15"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 12h17M12 3.5c2.6 2.6 2.6 14.4 0 17M12 3.5c-2.6 2.6-2.6 14.4 0 17" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+        <button class="icon-btn danger r-del" title="Удалить">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M6 7h12M10 7V5h4v2M8 7l1 12h6l1-12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="scope" hidden>
+        <input class="r-hosts" type="text" size="1" placeholder="на всех сайтах  ·  *.stg.example.ru" spellcheck="false">
+        <button class="chip r-here">текущий</button>
+        <button class="chip r-all">все</button>
+      </div>
+    </section>
+  </template>
+
+  <script src="popup.js"></script>
+</body>
+</html>

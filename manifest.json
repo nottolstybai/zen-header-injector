@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "name": "Header Injector",
+  "version": "1.4.0",
+  "description": "Adds custom request headers to requests, on all sites or selected hosts.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "header-injector@local",
+      "strict_min_version": "115.0"
+    }
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "tabs",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_title": "Header Injector",
+    "default_popup": "popup.html",
+    "default_icon": "icons/icon.svg"
+  },
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  }
+}
