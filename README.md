@@ -6,69 +6,32 @@
 
 </div>
 
-Расширение для Zen и Firefox, которое добавляет свои HTTP-заголовки к запросам браузера.
+Расширение для Zen и Firefox: добавляет свои HTTP-заголовки к запросам. Правило можно ограничить хостами, например `*.example.ru`.
 
-## Быстрый старт
+## Использование
 
-1. Установите расширение (см. [Установка](#установка)).
-2. Нажмите на иконку расширения и выберите **+ Добавить header**.
-3. Введите имя заголовка и значение.
-4. Обновите страницу.
+Нажмите на иконку → **+ Добавить header** → введите имя и значение → обновите страницу.
 
-## Возможности
-
-- Правила из имени заголовка и значения, каждое можно включить или выключить отдельно.
-- Ограничение по хостам, например `*.example.ru`. По умолчанию правило действует на всех сайтах.
-- Если заголовок уже есть в запросе, его значение заменяется.
-- Светлая и тёмная тема.
+Проверка: правило `x-test-header` = `test-123`, затем https://httpbin.org/headers. В ответе будет `"X-Test-Header": "test-123"`.
 
 ## Установка
 
-### Временная
+**Временная** (до перезапуска браузера): `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on** → `manifest.json`.
 
-1. Склонируйте репозиторий.
-2. Откройте `about:debugging#/runtime/this-firefox`.
-3. **Load Temporary Add-on** → выберите `manifest.json`.
+**Постоянная, без подписи** (Zen, Developer Edition, Nightly):
 
-Расширение пропадёт после перезапуска браузера.
-
-### Постоянная, без подписи
-
-Для Zen, Firefox Developer Edition и Nightly.
-
-1. `about:config` → `xpinstall.signatures.required` = `false`.
-2. Перезапустите браузер.
-3. Соберите пакет:
+1. `about:config` → `xpinstall.signatures.required` = `false`, перезапустите браузер.
+2. Соберите пакет:
    ```sh
    zip -r header-injector.xpi manifest.json background.js popup.html popup.css popup.js theme.js icons
    ```
-4. `about:addons` → ⚙ → **Install Add-on From File…** → `header-injector.xpi`.
+3. `about:addons` → ⚙ → **Install Add-on From File…** → `header-injector.xpi`.
 
-### Постоянная, с подписью Mozilla
-
-Для любого Firefox. Подпись бесплатная, расширение не публикуется в каталоге (`unlisted`).
-
-1. Получите ключи на https://addons.mozilla.org/developers/addon/api/key/ → **Generate new credentials**.
-2. Подпишите:
-   ```sh
-   npx web-ext sign --channel=unlisted --api-key=<JWT issuer> --api-secret=<JWT secret>
-   ```
-3. Установите полученный `.xpi` через `about:addons` → ⚙ → **Install Add-on From File…**
-
-Перед каждой новой подписью увеличивайте `version` в `manifest.json`.
-
-## Проверка
-
-1. Добавьте правило `x-test-header` = `test-123`.
-2. Откройте https://httpbin.org/headers.
-3. В ответе должно быть `"X-Test-Header": "test-123"`.
-
-## Решение проблем
-
-- **Нет цифры на иконке.** Нет активных правил. Проверьте общий переключатель и переключатель правила.
-- **Оранжевый глобус.** Правило ограничено хостами. Нажмите на глобус → **все**.
-- **Ошибки.** `about:debugging#/runtime/this-firefox` → Header Injector → **Inspect** → Console. Срабатывания пишутся строками `[header-injector] ...`.
-- **Изменения не применились.** Для временной установки нажмите **Reload**. Если не помогло, переустановите расширение.
+**Постоянная, с подписью Mozilla** (любой Firefox): ключи на https://addons.mozilla.org/developers/addon/api/key/, затем
+```sh
+npx web-ext sign --channel=unlisted --api-key=<JWT issuer> --api-secret=<JWT secret>
+```
+Перед каждой подписью увеличивайте `version` в `manifest.json`.
 
 ## Как это устроено
 
